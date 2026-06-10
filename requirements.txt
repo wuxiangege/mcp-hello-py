@@ -1,0 +1,8 @@
+# MCP Hello Server - Python 依赖包
+# 安装: pip install -r requirements.txt
+
+# MCP Python SDK（包含 FastMCP）
+mcp[cli]>=1.23.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
