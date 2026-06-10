@@ -1,8 +1,8 @@
-# MCP Hello Server (Python)
+# 👋 MCP Hello Server (Python)
 
 简单的 Hello MCP 服务器 - 接收输入的姓名，并用韩语打招呼！
 
-## 结构
+## 📂 结构
 
 ```
 mcp-hello-py/
@@ -16,13 +16,13 @@ mcp-hello-py/
 └── README.md             # 此文件
 ```
 
-## 主要功能
+## ✨ 主要功能
 
 - **say_hello**: 以 `"안녕하세요, {name}님!"` 的格式打招呼
 - **say_hello_multiple**: 一次向多个人打招呼
 - **MCP 协议**: 支持 Tools、Resources、Prompts
 
-## 安装
+## 📦 安装
 
 ```bash
 # 创建并激活虚拟环境
@@ -33,7 +33,7 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 环境变量配置
+## 🔧 环境变量配置
 
 创建 `.env` 文件：
 
@@ -42,9 +42,9 @@ pip install -r requirements.txt
 PORT=8080
 ```
 
-## 运行
+## 🚀 运行
 
-### Streamable HTTP 模式 (Cloud Run, Web)
+### 🌐 Streamable HTTP 模式 (Cloud Run, Web)
 ```bash
 python3 src/server.py --http-stream
 
@@ -52,7 +52,7 @@ python3 src/server.py --http-stream
 PORT=3000 python3 src/server.py --http-stream
 ```
 
-## 架构
+## 🏗️ 架构
 
 ```
 ┌─────────────┐       ┌─────────────────┐
@@ -64,16 +64,16 @@ PORT=3000 python3 src/server.py --http-stream
    POST /mcp             Protocol
 ```
 
-## 测试（Postman）
+## 🧪 测试（Postman）
 
-### Headers 设置（所有请求必填）
+### 📋 Headers 设置（所有请求必填）
 
 | Header | Value |
 |--------|-------|
 | `Content-Type` | `application/json` |
 | `Accept` | `application/json` |
 
-### 1. 初始化 MCP 服务器
+### 1️⃣ 初始化 MCP 服务器
 
 - **Method**: `POST`
 - **URL**: `http://localhost:8080/mcp`
@@ -92,7 +92,7 @@ PORT=3000 python3 src/server.py --http-stream
 }
 ```
 
-### 2. 查看 Tool 列表
+### 2️⃣ 查看 Tool 列表
 
 ```json
 {
@@ -103,7 +103,7 @@ PORT=3000 python3 src/server.py --http-stream
 }
 ```
 
-### 3. say_hello 调用
+### 3️⃣ say_hello 调用
 
 ```json
 {
@@ -128,7 +128,7 @@ PORT=3000 python3 src/server.py --http-stream
 }
 ```
 
-### 4. say_hello_multiple 调用
+### 4️⃣ say_hello_multiple 调用
 
 ```json
 {
@@ -153,21 +153,21 @@ PORT=3000 python3 src/server.py --http-stream
 }
 ```
 
-## Cloud Run 部署
+## ☁️ Cloud Run 部署
 
-### 测试已部署的服务器
+### 🧪 测试已部署的服务器
 
 部署 URL 示例: `https://mcp-hello-py-xxxxxx.asia-northeast3.run.app/mcp`
 
 在 Postman 中仅修改 URL 即可用同样方式测试。
 
-### 环境变量配置（Cloud Run）
+### 🔧 环境变量配置（Cloud Run）
 
 | 变量 | 值 | 说明 |
 |------|-----|------|
 | `PORT` | `8080` | Cloud Run 默认端口（自动设置） |
 
-## MCP Tools
+## 🛠️ MCP Tools
 
 ### say_hello
 
@@ -185,7 +185,7 @@ PORT=3000 python3 src/server.py --http-stream
 |---------|------|------|------|
 | `names` | array | 是 | 姓名列表 |
 
-## 技术栈
+## 📚 技术栈
 
 - **Python**: 3.11+
 - **MCP SDK**: 1.23.0+ (FastMCP)
@@ -193,18 +193,19 @@ PORT=3000 python3 src/server.py --http-stream
 - **Uvicorn**: ASGI 服务器
 - **Docker**: 容器化
 
-## 传输模式
+## 📡 传输模式
 
 | 模式 | 使用场景 | 端点 |
 |------|--------|-----------|
 | stdio | Claude Desktop, MCP Inspector | stdin/stdout |
 | Streamable HTTP | Cloud Run, Web | `POST /mcp` |
 
-## 参考
+## 📖 参考
 
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
 - [FastMCP 文档](https://github.com/modelcontextprotocol/python-sdk)
 
-## 许可证
+## 📄 许可证
 
 MIT License
+
