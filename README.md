@@ -1,6 +1,6 @@
 # 👋 MCP Hello Server (Python)
 
-简单的 Hello MCP 服务器 - 接收输入的姓名，并用韩语打招呼！
+简单的 Hello MCP 服务器 - 接收输入的姓名，并用英语打招呼！
 
 ## 📂 结构
 
@@ -18,7 +18,7 @@ mcp-hello-py/
 
 ## ✨ 主要功能
 
-- **say_hello**: 以 `"안녕하세요, {name}님!"` 的格式打招呼
+- **say_hello**: 以 `"Hello, {name}!" 的格式打招呼
 - **say_hello_multiple**: 一次向多个人打招呼
 - **MCP 协议**: 支持 Tools、Resources、Prompts
 
@@ -112,7 +112,7 @@ PORT=3000 python3 src/server.py --http-stream
   "method": "tools/call",
   "params": {
     "name": "say_hello",
-    "arguments": {"name": "김철수"}
+    "arguments": {"name": "John"}
   }
 }
 ```
@@ -123,7 +123,7 @@ PORT=3000 python3 src/server.py --http-stream
   "jsonrpc": "2.0",
   "id": 3,
   "result": {
-    "content": [{"type": "text", "text": "안녕하세요, 김철수님!"}]
+    "content": [{"type": "text", "text": "Hello, John!"}]
   }
 }
 ```
@@ -137,7 +137,7 @@ PORT=3000 python3 src/server.py --http-stream
   "method": "tools/call",
   "params": {
     "name": "say_hello_multiple",
-    "arguments": {"names": ["김철수", "이영희", "박민수"]}
+    "arguments": {"names": ["John", "Jane", "Bob"]}
   }
 }
 ```
@@ -148,7 +148,7 @@ PORT=3000 python3 src/server.py --http-stream
   "jsonrpc": "2.0",
   "id": 4,
   "result": {
-    "content": [{"type": "text", "text": "• 안녕하세요, 김철수님!\n• 안녕하세요, 이영희님!\n• 안녕하세요, 박민수님!"}]
+    "content": [{"type": "text", "text": "• Hello, John!\n• Hello, Jane!\n• Hello, Bob!"}]
   }
 }
 ```

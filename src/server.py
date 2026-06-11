@@ -2,10 +2,10 @@
 """
 Simple Hello MCP Server
 
-此模块提供一个接收姓名并用韩语打招呼的简单 MCP 服务器。
+此模块提供一个接收姓名并用英语打招呼的简单 MCP 服务器。
 
 主要功能:
-    - 单人问候: 向一个人说 "안녕하세요, {name}님!"
+    - 单人问候: 向一个人说 "Hello, {name}!"
     - 多人问候: 同时向多个人问候
     - MCP 协议: 支持 Tools、Resources、Prompts
     - Streamable HTTP 传输: 支持 Cloud Run 等无服务器环境
@@ -19,8 +19,8 @@ Simple Hello MCP Server
         $ python src/server.py
     
     工具调用:
-        {"name": "say_hello", "arguments": {"name": "김철수"}}
-        -> "안녕하세요, 김철수님!"
+        {"name": "say_hello", "arguments": {"name": "John"}}
+        -> "Hello, John!"
 
 作者: MCP Hello Team
 版本: 1.0.0
@@ -38,7 +38,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 
 mcp = FastMCP(
     name="mcp-hello",
-    instructions="一个接收姓名并用韩语打招呼的简单 MCP 服务器。",
+    instructions="一个接收姓名并用英语打招呼的简单 MCP 服务器。",
     stateless_http=True,
     json_response=True,
     host="0.0.0.0",
@@ -55,24 +55,24 @@ mcp = FastMCP(
 @mcp.tool()
 def say_hello(name: str) -> str:
     """
-    接收姓名并用韩语问候。
+    接收姓名并用英语问候。
     
     返回简单格式的问候语，如果姓名为空则返回默认消息。
     
     Args:
-        name: 要问候的人的姓名（例如："김철수", "이영희", "박민수"）
+        name: 要问候的人的姓名（例如："John", "Jane", "Bob"）
     
     Returns:
-        "안녕하세요, {name}님!" 格式的问候语字符串
+        "Hello, {name}!" 格式的问候语字符串
     
     Examples:
-        >>> say_hello("김철수")
-        '안녕하세요, 김철수님!'
+        >>> say_hello("John")
+        'Hello, John!'
     """
     if not name or name.strip() == "":
-        return "안녕하세요!"
+        return "Hello!"
     
-    return f"안녕하세요, {name}님!"
+    return f"Hello, {name}!"
 
 
 @mcp.tool()
@@ -84,14 +84,14 @@ def say_hello_multiple(names: list[str]) -> str:
     并用项目符号（•）分隔为单个字符串返回。
     
     Args:
-        names: 要问候的人的姓名列表（例如：["김철수", "이영희", "박민수"]）
+        names: 要问候的人的姓名列表（例如：["John", "Jane", "Bob"]）
     
     Returns:
         每个问候语按换行分隔的字符串
     
     Examples:
-        >>> say_hello_multiple(["김철수", "이영희"])
-        '• 안녕하세요, 김철수님!\\n• 안녕하세요, 이영희님!'
+        >>> say_hello_multiple(["John", "Jane"])
+        '• Hello, John!\\n• Hello, Jane!'
     """
     if not names:
         return ""
@@ -119,7 +119,7 @@ def get_readme() -> str:
     return """# Hello MCP Server Documentation
 
 ## 概述
-一个接收姓名并用韩语问候的简单 MCP 服务器。
+一个接收姓名并用英语问候的简单 MCP 服务器。
 
 ## 可用工具
 
@@ -132,13 +132,13 @@ def get_readme() -> str:
 **示例:**
 ```json
 {
-  "name": "김철수"
+  "name": "John"
 }
 ```
 
 **结果:**
 ```
-안녕하세요, 김철수님!
+Hello, John!
 ```
 
 ### say_hello_multiple
@@ -150,15 +150,15 @@ def get_readme() -> str:
 **示例:**
 ```json
 {
-  "names": ["김철수", "이영희", "박민수"]
+  "names": ["John", "Jane", "Bob"]
 }
 ```
 
 **结果:**
 ```
-• 안녕하세요, 김철수님!
-• 안녕하세요, 이영희님!
-• 안녕하세요, 박민수님!
+• Hello, John!
+• Hello, Jane!
+• Hello, Bob!
 ```
 
 ## 使用方法
