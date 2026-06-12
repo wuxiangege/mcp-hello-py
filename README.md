@@ -200,6 +200,39 @@ PORT=3000 python3 src/server.py --http-stream
 | stdio | Claude Desktop, MCP Inspector | stdin/stdout |
 | Streamable HTTP | Cloud Run, Web | `POST /mcp` |
 
+## 🔌 AI 编辑器配置示例
+
+### 1️⃣ 本地 stdio 模式配置
+适用于本地运行服务器的情况，直接通过 stdin/stdout 通信：
+
+```json
+{
+  "mcpServers": {
+    "mcp-hello": {
+      "command": "/Users/wuxian/.pyenv/shims/python3",
+      "args": [
+        "/Users/wuxian/Desktop/codes/mcp-hello-py/src/server.py"
+      ]
+    }
+  }
+}
+```
+
+### 2️⃣ 远程 HTTP 模式配置
+适用于服务器部署在局域网或公网的情况，通过 HTTP 连接：
+
+```json
+{
+  "mcpServers": {
+    "mcp-hello-remote": {
+      "url": "http://192.168.100.5:8080/mcp"
+    }
+  }
+}
+```
+
+> 注意：请将 `http://192.168.100.5:8080/mcp` 替换为你实际的服务器地址。
+
 ## 📖 参考
 
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
