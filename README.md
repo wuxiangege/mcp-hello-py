@@ -52,6 +52,46 @@ python3 src/server.py --http-stream
 PORT=3000 python3 src/server.py --http-stream
 ```
 
+## 🔌 AI 编辑器配置示例
+
+### 1️⃣ 本地 stdio 模式配置
+适用于本地运行服务器的情况，直接通过 stdin/stdout 通信：
+
+```json
+{
+  "mcpServers": {
+    "mcp-hello": {
+      "command": "/Users/wuxian/.pyenv/shims/python3",
+      "args": [
+        "/Users/wuxian/Desktop/codes/mcp-hello-py/src/server.py"
+      ]
+    }
+  }
+}
+```
+
+### 2️⃣ 远程 HTTP 模式配置
+适用于服务器部署在局域网或公网的情况，通过 HTTP 连接：
+
+```json
+{
+  "mcpServers": {
+    "mcp-hello-remote": {
+      "url": "http://192.168.100.5:8080/mcp"
+    }
+  }
+}
+```
+
+> 注意：请将 `http://192.168.100.5:8080/mcp` 替换为你实际的服务器地址。
+
+## 📡 传输模式
+
+| 模式 | 使用场景 | 端点 |
+|------|--------|-----------|
+| stdio | Claude Desktop, MCP Inspector | stdin/stdout |
+| Streamable HTTP | Cloud Run, Web | `POST /mcp` |
+
 ## 🏗️ 架构
 
 ```
@@ -185,53 +225,13 @@ PORT=3000 python3 src/server.py --http-stream
 |---------|------|------|------|
 | `names` | array | 是 | 姓名列表 |
 
-## 📚 技术栈
+##  技术栈
 
 - **Python**: 3.11+
 - **MCP SDK**: 1.23.0+ (FastMCP)
 - **Pydantic**: 2.x
 - **Uvicorn**: ASGI 服务器
 - **Docker**: 容器化
-
-## 📡 传输模式
-
-| 模式 | 使用场景 | 端点 |
-|------|--------|-----------|
-| stdio | Claude Desktop, MCP Inspector | stdin/stdout |
-| Streamable HTTP | Cloud Run, Web | `POST /mcp` |
-
-## 🔌 AI 编辑器配置示例
-
-### 1️⃣ 本地 stdio 模式配置
-适用于本地运行服务器的情况，直接通过 stdin/stdout 通信：
-
-```json
-{
-  "mcpServers": {
-    "mcp-hello": {
-      "command": "/Users/wuxian/.pyenv/shims/python3",
-      "args": [
-        "/Users/wuxian/Desktop/codes/mcp-hello-py/src/server.py"
-      ]
-    }
-  }
-}
-```
-
-### 2️⃣ 远程 HTTP 模式配置
-适用于服务器部署在局域网或公网的情况，通过 HTTP 连接：
-
-```json
-{
-  "mcpServers": {
-    "mcp-hello-remote": {
-      "url": "http://192.168.100.5:8080/mcp"
-    }
-  }
-}
-```
-
-> 注意：请将 `http://192.168.100.5:8080/mcp` 替换为你实际的服务器地址。
 
 ## 📖 参考
 
@@ -241,4 +241,3 @@ PORT=3000 python3 src/server.py --http-stream
 ## 📄 许可证
 
 MIT License
-
