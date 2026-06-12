@@ -103,8 +103,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env          # 本地敏感配置（被忽略）
-# 注意：.env.example 不被忽略，作为配置模板提交
+#.env          # 本地敏感配置（被忽略）
+.env.example   # 注意：不被忽略，作为配置模板提交
 .venv
 env/
 venv/
