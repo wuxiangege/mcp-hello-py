@@ -9,7 +9,8 @@ mcp-hello-py/
 ├── src/
 │   ├── __init__.py       # 包初始化
 │   └── server.py         # MCP 服务器
-├── .env                  # 环境变量配置
+├── .env                  # 环境变量配置（本地）
+├── .env.example          # 环境变量配置模板
 ├── requirements.txt      # 依赖项
 ├── pyproject.toml        # 项目元数据
 ├── Dockerfile            # Docker 配置
@@ -50,6 +51,20 @@ python3 src/server.py --http-stream
 
 # 使用自定义端口
 PORT=3000 python3 src/server.py --http-stream
+```
+
+启动后有以下端点可用：
+- **MCP 协议**: `http://localhost:8080/mcp`
+- **健康检查**: `http://localhost:8080/health`
+- **服务信息**: `http://localhost:8080/`
+
+健康检查返回示例：
+```json
+{
+  "status": "healthy",
+  "service": "mcp-hello",
+  "version": "1.0.0"
+}
 ```
 
 ## 🔌 AI 编辑器配置示例

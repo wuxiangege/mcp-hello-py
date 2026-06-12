@@ -9,11 +9,13 @@ Simple Hello MCP Server
     - 多人问候: 同时向多个人问候
     - MCP 协议: 支持 Tools、Resources、Prompts
     - Streamable HTTP 传输: 支持 Cloud Run 等无服务器环境
+    - 健康检查端点: /health
 
 使用示例:
     HTTP 模式运行:
         $ python src/server.py --http-stream
         -> http://localhost:8080/mcp
+        -> 健康检查: http://localhost:8080/health
     
     stdio 模式运行:
         $ python src/server.py
@@ -31,6 +33,8 @@ import os
 
 from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
+from starlette.responses import JSONResponse, PlainTextResponse
+
 
 # ============================================================================
 # FastMCP 服务器创建
@@ -208,6 +212,58 @@ def greeting_message(recipient: str) -> str:
 
 
 # ============================================================================
+# 添加健康检查端点（使用 FastMCP 官方支持的方式）
+# ============================================================================
+
+# 使用 FastMCP 提供的 custom_route 装饰器添加健康检查端点
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    """健康检查端点"""
+    return JSONResponse({
+        "status": "healthy",
+        "service": "mcp-hello",
+        "version": "1.0.0"
+    })
+
+@mcp.custom_route("/", methods=["GET"])
+async def root(request):
+    """根端点，显示服务信息"""
+    return PlainTextResponse("""
+MCP Hello Server
+================
+
+Endpoints:
+- /health : Health check endpoint
+- /mcp    : MCP protocol endpoint
+- /       : This page
+
+Usage:
+  This server provides MCP (Model Context Protocol) functionality.
+  Use an MCP client to connect to /mcp endpoint.
+""")
+
+
+# ============================================================================
+# HTTP 服务器启动
+# ============================================================================
+
+def run_http_server():
+    """
+    启动 HTTP 服务器，包含 /health 健康检查端点。
+    """
+    port = int(os.environ.get("PORT", 8080))
+    mcp.settings.port = port
+    
+    print(f"🚀 MCP Hello Server 启动在 http://0.0.0.0:{port}")
+    print(f"   MCP 端点: http://localhost:{port}/mcp")
+    print(f"   健康检查: http://localhost:{port}/health")
+    print()
+    
+    # 使用标准方式启动 MCP 服务器
+    mcp.run(transport="streamable-http")
+
+
+# ============================================================================
 # Main Entry Point
 # ============================================================================
 
@@ -216,7 +272,7 @@ def main():
     MCP 服务器的主入口点。
     
     通过命令行参数选择传输模式：
-    - --http-stream: HTTP Stream 模式
+    - --http-stream: HTTP Stream 模式（带健康检查端点 /health）
     - 默认值: stdio 模式（标准输入输出）
     
     环境变量：
@@ -226,6 +282,7 @@ def main():
         HTTP 模式：
             $ python src/server.py --http-stream
             $ PORT=3000 python src/server.py --http-stream
+            -> 健康检查: http://localhost:8080/health
         
         stdio 模式：
             $ python src/server.py
@@ -233,9 +290,7 @@ def main():
     import sys
     
     if "--http-stream" in sys.argv:
-        port = int(os.environ.get("PORT", 8080))
-        mcp.settings.port = port
-        mcp.run(transport="streamable-http")
+        run_http_server()
     else:
         mcp.run(transport="stdio")
 
